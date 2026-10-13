@@ -8,3 +8,67 @@
 [submodule "third_party/aiter"]
 	path = third_party/aiter
 	url = https://github.com/ROCm/aiter.git
+[submodule "third_party/llm/transformers"]
+	path = third_party/llm/transformers
+	url = https://github.com/huggingface/transformers.git
+	shallow = true
+[submodule "third_party/llm/tokenizers"]
+	path = third_party/llm/tokenizers
+	url = https://github.com/huggingface/tokenizers.git
+	shallow = true
+[submodule "third_party/llm/safetensors"]
+	path = third_party/llm/safetensors
+	url = https://github.com/huggingface/safetensors.git
+	shallow = true
+[submodule "third_party/llm/accelerate"]
+	path = third_party/llm/accelerate
+	url = https://github.com/huggingface/accelerate.git
+	shallow = true
+[submodule "third_party/llm/peft"]
+	path = third_party/llm/peft
+	url = https://github.com/huggingface/peft.git
+	shallow = true
+[submodule "third_party/llm/trl"]
+	path = third_party/llm/trl
+	url = https://github.com/huggingface/trl.git
+	shallow = true
+[submodule "third_party/llm/vllm"]
+	path = third_party/llm/vllm
+	url = https://github.com/vllm-project/vllm.git
+	shallow = true
+[submodule "third_party/llm/sglang"]
+	path = third_party/llm/sglang
+	url = https://github.com/sgl-project/sglang.git
+	shallow = true
+[submodule "third_party/llm/triton"]
+	path = third_party/llm/triton
+	url = https://github.com/triton-lang/triton.git
+	shallow = true
+[submodule "third_party/llm/xformers"]
+	path = third_party/llm/xformers
+	url = https://github.com/facebookresearch/xformers.git
+	shallow = true
+[submodule "third_party/llm/quack"]
+	path = third_party/llm/quack
+	url = https://github.com/Dao-AILab/quack.git
+	shallow = true
+[submodule "third_party/llm/liger-kernel"]
+	path = third_party/llm/liger-kernel
+	url = https://github.com/linkedin/Liger-Kernel.git
+	shallow = true
+[submodule "third_party/llm/deepspeed"]
+	path = third_party/llm/deepspeed
+	url = https://github.com/deepspeedai/DeepSpeed.git
+	shallow = true
+[submodule "third_party/llm/megatron-lm"]
+	path = third_party/llm/megatron-lm
+	url = https://github.com/NVIDIA/Megatron-LM.git
+	shallow = true
+[submodule "third_party/llm/nanoGPT"]
+	path = third_party/llm/nanoGPT
+	url = https://github.com/karpathy/nanoGPT.git
+	shallow = true
+[submodule "third_party/llm/nanochat"]
+	path = third_party/llm/nanochat
+	url = https://github.com/karpathy/nanochat.git
+	shallow = true
