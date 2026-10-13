@@ -663,7 +663,7 @@ slices:
 merge_method: passthrough
 ```
 
-24 + 20 = 44 层（原模型 40 层）；B 的 20–23 层与 A 的 20–23 层功能"重叠"，这是 frankenmerge 的常见做法（重叠衔接比硬切更平滑）。输出 config 的层数由 `_model_out_config` 根据 slice 总长写入（[merge.py#L287](https://github.com/arcee-ai/mergekit/blob/9eeb539892c6753b032ea164e818b44a8c7a401b/mergekit/merge.py#L287)）。
+24 + 20 = 44 层（原模型 40 层）；B 的 20–23 层与 A 的 20–23 层功能"重叠"，这是 frankenmerge 的常见做法（重叠衔接比硬切更平滑）。输出 config 的层数由 `_model_out_config` 把各 slice 的 `layer_range` 长度求和后写入 `num_hidden_layers` 等配置键（[merge.py#L302-L338](https://github.com/arcee-ai/mergekit/blob/9eeb539892c6753b032ea164e818b44a8c7a401b/mergekit/merge.py#L302-L338)）。
 
 ### 3.10 执行适配：`ExecuteMergeMethodTask.execute`
 
