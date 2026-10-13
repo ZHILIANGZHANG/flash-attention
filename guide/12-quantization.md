@@ -465,7 +465,7 @@ for i in tqdm.tqdm(range(len(layers)), desc="Running AWQ..."):
 return awq_results
 ```
 
-- Catcher 技巧与 wanda/GPTQ 相同；这里一次性把所有校准样本（默认 128 段 × 512 token，来自 pileval）拼成一个 batch 送入。
+- Catcher 技巧与 wanda/GPTQ 相同；校准数据：`entry.py` 调用 `run_awq(..., n_samples=128, seqlen=512)`（[entry.py#L203-L210](https://github.com/mit-han-lab/llm-awq/blob/d6e797a42b9ef7778de8ee2352116e0f48a78d61/awq/entry.py#L203-L210)），`get_calib_dataset` 从 pile-val 取 128 条不超过 512 token 的文本，**首尾拼接后再切成 512-token 的块**（[utils/calib_data.py#L5-L32](https://github.com/mit-han-lab/llm-awq/blob/d6e797a42b9ef7778de8ee2352116e0f48a78d61/awq/utils/calib_data.py#L5-L32)），所以块数通常少于 128；所有块拼成一个 batch 一次性送入。
 - 用 `functools.partial` 绑定 `name`，等价于 wanda 的闭包工厂。
 - **与 GPTQ 的重要区别**：`inps = layer(inps)` 在**搜索 scale 之前**、用原始层算出——AWQ 的下一层输入**不**包含本层量化误差（但包含了等价缩放，等价缩放本身不改变输出）。
 - AWQ 的产出是 `awq_results = {"scale": [...], "clip": [...]}`，**不改权重的量化**——量化（伪量化或真量化）是之后单独一步（`pseudo_quantize_model_weight` / `real_quantize_model_weight`）。`apply_awq`（[L252-L254](https://github.com/mit-han-lab/llm-awq/blob/d6e797a42b9ef7778de8ee2352116e0f48a78d61/awq/quantize/pre_quant.py#L252-L254)）可以把缓存的结果套到新加载的 fp16 模型上。
@@ -732,7 +732,7 @@ unpacked = unpacked[:, :, reverse_order]
 |---|---|---|---|---|---|---|
 | RTN | 否 | 无 | 否 | W8 per-channel；W4 g128 | 秒级 | 一般（≥7B 尚可，小模型掉点明显）|
 | GPTQ | 是（~128×2048 token） | `H = XXᵀ` | **是**（误差补偿到后续列）| W4 g128 (+act-order/static) | 分钟~小时 | 好 |
-| AWQ | 是（~128×512 token） | `mean|x|`，块输出误差 | 等价缩放 + clip（无补偿）| W4 g128 非对称 | 分钟级 | 好，泛化更稳（不易过拟合校准集）|
+| AWQ | 是（128 条文本拼接切成 512-token 块） | `mean|x|`，块输出误差 | 等价缩放 + clip（无补偿）| W4 g128 非对称 | 分钟级 | 好，泛化更稳（不易过拟合校准集）|
 | SmoothQuant（参考） | 是 | `max|x|`, `max|w|` | 等价缩放（迁移激活离群到权重）| W8A8 | 快 | — |
 | fp8 (E4M3) | 可选（静态 scale） | `amax` | 否 | per-tensor / per-channel / per-block | 快 | 近无损（8bit）|
 | SparseGPT（对照） | 是 | `H` | 是 | 50% / 2:4 | 同 GPTQ | — |
@@ -761,7 +761,7 @@ GPTQ vs SparseGPT：同一个 `H`、同一个 Cholesky、同一个块循环；�
 
 ## 6. 自测题
 
-1. 4bit 对称量化、`xmax = 1.5`：按 GPTQ `find_params`，scale 和 zero 是多少？`w = −1.5` 会被量化成哪个整数？（答：`scale = 3/15 = 0.2`，`zero = 8`，`q = clamp(round(−7.5)+8) = 0 或 1`——注意 `torch.round` 是"四舍六入五成双"，`round(−7.5) = −8`，所以 q=0，ŵ=−1.6）
+1. 4bit 对称量化、`xmax = 1.5`：按 GPTQ `find_params`，scale 和 zero 是多少？`w = −1.5` 会被量化成哪个整数？（答：`xmin` 被设为 `−1.5`，`scale = 3/15 = 0.2`，`zero = 8`；`w/s = −7.5`，`torch.round` 是"银行家舍入"（半数取偶），`round(−7.5) = −8`，`q = clamp(−8+8, 0, 15) = 0`，`ŵ = 0.2×(0−8) = −1.6`。可见对称 + 无符号偏置 8 的格点是 `{−8,…,7}·s`，正端比负端少一格。）
 2. 写出 GPTQ 与 SparseGPT 在 `fasterquant`/`fasterprune` 内循环中唯一不同的那一行。
 3. 为什么 GPTQ 可以让所有输出行按同一顺序量化，而 OBQ 要为每行单独选顺序？这对计算量意味着什么？
 4. act-order 为什么按 `diag(H)` 降序？`diag(H)` 的物理含义是什么？
