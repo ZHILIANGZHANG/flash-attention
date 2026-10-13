@@ -213,8 +213,9 @@ if __name__ == "__main__":
         assert torch.allclose(y1, y2, atol=1e-5), score
         m.update_bias(c)
         print(score, "aux=%.4f" % aux1.item(), "counts=", c.tolist())
-    y3, _, _ = m.forward_sorted(x, capacity=2)                    # 小容量 -> 会丢 token
-    print("dropped diff:", (y3 - y2).abs().max().item())
+    y_full, _, _ = m.forward_sorted(x)                            # bias 已更新，重新算一次不丢 token 的结果
+    y_drop, _, _ = m.forward_sorted(x, capacity=2)                # 小容量 -> 会丢 token
+    print("dropped diff:", (y_drop - y_full).abs().max().item())
 ```
 
 要点：
@@ -654,7 +655,7 @@ Megatron 还有 `MoEFlexTokenDispatcher`（L2022 起），其 `_DeepepManager`�
 
 - `EPBuffer.dispatch` L562 起：https://github.com/deepseek-ai/DeepEP/blob/93eb6eb238127e96c6d7a4a625a6dad158348509/deep_ep/buffers/ep.py#L562-L700
 - `EPBuffer.combine` L770–L844：https://github.com/deepseek-ai/DeepEP/blob/93eb6eb238127e96c6d7a4a625a6dad158348509/deep_ep/buffers/ep.py#L770-L844
-- README 接口示例 L105–L290：https://github.com/deepseek-ai/DeepEP/blob/93eb6eb238127e96c6d7a4a625a6dad158348509/README.md#L105-L290
+- README 接口示例 L105–L290：https://github.com/deepseek-ai/DeepEP/blob/93eb6eb238127e96c6d7a4a625a6dad158348509/README.md?plain=1#L105-L290
 
 **版本提示**：本仓库是 DeepEP 2.5（`deep_ep/__init__.py` 中 `__version__ = '2.5.0'`）。README 的 release notes 写明 V2.5 “Fully remove V1”，并且 “High-throughput and low-latency APIs unified into a single `EPBuffer` interface”。所以你在本地 submodule 里**找不到**老的 `Buffer.low_latency_dispatch`；老 API 的调用方式可以在 vLLM 里看到（见下文）。
 
