@@ -6,6 +6,8 @@
 > - `repos/09-model-pruning/Torch-Pruning`（VainF/Torch-Pruning @ `e80127d7`）：通用 DepGraph 依赖图
 >
 > 本文所有行号都基于上述 commit，链接是 permalink，点开即对应原文。
+>
+> 阅读约定：引用的源码片段为便于阅读，会用 `...` 省略无关行、把跨多行的函数参数合并为一行，偶尔在行尾加中文注释；一切以 permalink 指向的原文为准。
 
 ---
 
@@ -684,13 +686,13 @@ def _fix_dependency_graph_non_recursive(dep, idxs, *args):
 **(g) 真正删权重：`LinearPruner`** —— [function.py#L212-L235](https://github.com/VainF/Torch-Pruning/blob/e80127d7c6935c319a7dd6719b8a72e3c1fcbff9/torch_pruning/pruner/function.py#L212-L235)
 
 ```python
-def prune_out_channels(self, layer, idxs):
+def prune_out_channels(self, layer: nn.Module, idxs: Sequence[int]) -> nn.Module:
     keep_idxs = list(set(range(layer.out_features)) - set(idxs))
     keep_idxs.sort()
     layer.out_features = layer.out_features-len(idxs)
     layer.weight = self._prune_parameter_and_grad(layer.weight, keep_idxs, 0)   # 删行
     ...
-def prune_in_channels(self, layer, idxs):
+def prune_in_channels(self, layer: nn.Module, idxs: Sequence[int]) -> nn.Module:
     ...
     layer.weight = self._prune_parameter_and_grad(layer.weight, keep_idxs, 1)   # 删列
 ```

@@ -6,6 +6,8 @@
 
 Permalink 前缀：`https://github.com/arcee-ai/mergekit/blob/9eeb539892c6753b032ea164e818b44a8c7a401b/`
 
+> 阅读约定：引用的源码片段为便于阅读，会用 `...` 省略无关行、把跨多行的函数参数合并为一行，偶尔在行尾加中文注释；一切以 permalink 指向的原文为准。
+
 ---
 
 ## 0. 要解决的问题 / 一句话直觉
@@ -712,7 +714,9 @@ class Expert(BaseModel):
 class MoEMergeConfig(BaseModel):
     base_model: ModelReference
     experts: List[Expert]
-    gate_mode: str = ("hidden")  # "hidden", "cheap_embed", "random", "uniform_random"
+    gate_mode: str = (
+        "hidden"  # possible values: "hidden", "cheap_embed", "random", "uniform_random"
+    )
     ...
     experts_per_token: int = 2
     shared_experts: Optional[List[Expert]] = None

@@ -6,6 +6,8 @@
 > - `repos/03-inference/vllm`（vllm-project/vllm @ `f5fefbff`）：`vllm/model_executor/layers/quantization/`
 >
 > 强烈建议先读 [guide 10 的 SparseGPT 部分](./10-model-pruning.md#37-sparsegptlibsparsegptpy)：GPTQ 与 SparseGPT 出自同一组作者，**代码骨架几乎逐行相同**，只是把"置 0"换成了"四舍五入到网格"。
+>
+> 阅读约定：引用的源码片段为便于阅读，会用 `...` 省略无关行、把跨多行的函数参数合并为一行，偶尔在行尾加中文注释；一切以 permalink 指向的原文为准。
 
 ---
 
