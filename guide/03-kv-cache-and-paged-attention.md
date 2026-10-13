@@ -748,7 +748,7 @@ const index_t row_offset_k = block_table == nullptr
 
 | 维度 | HF DynamicCache | nano-vllm | mini-sglang | vLLM v1 | SGLang |
 |---|---|---|---|---|---|
-| KV 布局 | 每层 `[B,H,T,D]` 连续，`torch.cat` 增长 | `[2,L,num_blocks,block_size,Hkv,D]` 一次性预分配 | `[2,L,num_pages,page_size,Hkv,D]` | 每层 `[num_blocks,Hkv,block_size,2D]`（FA backend） | `k_buffer/v_buffer` 每层 `[size+page, Hkv, D]` |
+| KV 布局 | 每层 `[B,H,T,D]` 连续，`torch.cat` 增长 | `[2,L,num_blocks,block_size,Hkv,D]` 一次性预分配 | `[2,L,num_pages,page_size,Hkv,D]` | 每层 `[num_blocks,Hkv,block_size,2D]`（FA backend） | `k_buffer/v_buffer` 每层一个，NHD 布局下 `[size+page_size, Hkv, D]`（`memory_pool.py` `_create_buffers_normal` L2531 起） |
 | 页表粒度 | 无 | 块号 `seq.block_table` | token 槽位 `page_table[req, pos]` | 块号 `block_table`（GPU CpuGpuBuffer） | token 槽位 `req_to_token` |
 | 默认 page 大小 | — | 256（受 FA2 限制，`config.py` L17/L22） | 1（`engine/config.py` L25） | 16（`vllm/config/cache.py` L72 `DEFAULT_BLOCK_SIZE`） | CUDA 上默认 1（`srt/arg_groups/overrides.py` `_page_size_default` L1304–1325） |
 | 前缀复用 | 无 | 链式 xxhash，满块 | radix tree | 链式哈希 + extra_keys，满块 | radix tree + lock_ref/优先级/HiCache |
