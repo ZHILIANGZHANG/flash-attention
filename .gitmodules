@@ -1,74 +1,222 @@
 [submodule "csrc/cutlass"]
-	path = csrc/cutlass
+	path = flash-attention/csrc/cutlass
 	url = https://github.com/NVIDIA/cutlass.git
 [submodule "csrc/composable_kernel"]
-	path = csrc/composable_kernel
+	path = flash-attention/csrc/composable_kernel
 	url = https://github.com/ROCm/composable_kernel.git
 	branch = amd-master
 [submodule "third_party/aiter"]
-	path = third_party/aiter
+	path = flash-attention/third_party/aiter
 	url = https://github.com/ROCm/aiter.git
 [submodule "third_party/llm/transformers"]
-	path = third_party/llm/transformers
+	path = repos/00-basics/transformers
 	url = https://github.com/huggingface/transformers.git
 	shallow = true
 [submodule "third_party/llm/tokenizers"]
-	path = third_party/llm/tokenizers
+	path = repos/00-basics/tokenizers
 	url = https://github.com/huggingface/tokenizers.git
 	shallow = true
 [submodule "third_party/llm/safetensors"]
-	path = third_party/llm/safetensors
+	path = repos/00-basics/safetensors
 	url = https://github.com/huggingface/safetensors.git
 	shallow = true
 [submodule "third_party/llm/accelerate"]
-	path = third_party/llm/accelerate
+	path = repos/07-finetune/accelerate
 	url = https://github.com/huggingface/accelerate.git
 	shallow = true
 [submodule "third_party/llm/peft"]
-	path = third_party/llm/peft
+	path = repos/07-finetune/peft
 	url = https://github.com/huggingface/peft.git
 	shallow = true
 [submodule "third_party/llm/trl"]
-	path = third_party/llm/trl
+	path = repos/08-rl-alignment/trl
 	url = https://github.com/huggingface/trl.git
 	shallow = true
 [submodule "third_party/llm/vllm"]
-	path = third_party/llm/vllm
+	path = repos/03-inference/vllm
 	url = https://github.com/vllm-project/vllm.git
 	shallow = true
 [submodule "third_party/llm/sglang"]
-	path = third_party/llm/sglang
+	path = repos/03-inference/sglang
 	url = https://github.com/sgl-project/sglang.git
 	shallow = true
 [submodule "third_party/llm/triton"]
-	path = third_party/llm/triton
+	path = repos/02-attention-kernels/triton
 	url = https://github.com/triton-lang/triton.git
 	shallow = true
 [submodule "third_party/llm/xformers"]
-	path = third_party/llm/xformers
+	path = repos/02-attention-kernels/xformers
 	url = https://github.com/facebookresearch/xformers.git
 	shallow = true
 [submodule "third_party/llm/quack"]
-	path = third_party/llm/quack
+	path = repos/02-attention-kernels/quack
 	url = https://github.com/Dao-AILab/quack.git
 	shallow = true
 [submodule "third_party/llm/liger-kernel"]
-	path = third_party/llm/liger-kernel
+	path = repos/02-attention-kernels/liger-kernel
 	url = https://github.com/linkedin/Liger-Kernel.git
 	shallow = true
 [submodule "third_party/llm/deepspeed"]
-	path = third_party/llm/deepspeed
+	path = repos/13-distributed/deepspeed
 	url = https://github.com/deepspeedai/DeepSpeed.git
 	shallow = true
 [submodule "third_party/llm/megatron-lm"]
-	path = third_party/llm/megatron-lm
+	path = repos/13-distributed/megatron-lm
 	url = https://github.com/NVIDIA/Megatron-LM.git
 	shallow = true
 [submodule "third_party/llm/nanoGPT"]
-	path = third_party/llm/nanoGPT
+	path = repos/00-basics/nanoGPT
 	url = https://github.com/karpathy/nanoGPT.git
 	shallow = true
 [submodule "third_party/llm/nanochat"]
-	path = third_party/llm/nanochat
+	path = repos/00-basics/nanochat
 	url = https://github.com/karpathy/nanochat.git
+	shallow = true
+[submodule "repos/03-inference/mini-sglang"]
+	path = repos/03-inference/mini-sglang
+	url = https://github.com/sgl-project/mini-sglang.git
+	shallow = true
+[submodule "repos/04-kv-compression-token-pruning/kvpress"]
+	path = repos/04-kv-compression-token-pruning/kvpress
+	url = https://github.com/NVIDIA/kvpress.git
+	shallow = true
+[submodule "repos/04-kv-compression-token-pruning/streaming-llm"]
+	path = repos/04-kv-compression-token-pruning/streaming-llm
+	url = https://github.com/mit-han-lab/streaming-llm.git
+	shallow = true
+[submodule "repos/04-kv-compression-token-pruning/FastV"]
+	path = repos/04-kv-compression-token-pruning/FastV
+	url = https://github.com/pkunlp-icler/FastV.git
+	shallow = true
+[submodule "repos/06-moe/DeepEP"]
+	path = repos/06-moe/DeepEP
+	url = https://github.com/deepseek-ai/DeepEP.git
+	shallow = true
+[submodule "repos/08-rl-alignment/OpenRLHF"]
+	path = repos/08-rl-alignment/OpenRLHF
+	url = https://github.com/OpenRLHF/OpenRLHF.git
+	shallow = true
+[submodule "repos/05-linear-attention/flash-linear-attention"]
+	path = repos/05-linear-attention/flash-linear-attention
+	url = https://github.com/fla-org/flash-linear-attention.git
+	shallow = true
+[submodule "repos/08-rl-alignment/verl"]
+	path = repos/08-rl-alignment/verl
+	url = https://github.com/volcengine/verl.git
+	shallow = true
+[submodule "repos/08-rl-alignment/tinker-cookbook"]
+	path = repos/08-rl-alignment/tinker-cookbook
+	url = https://github.com/thinking-machines-lab/tinker-cookbook.git
+	shallow = true
+[submodule "repos/07-finetune/LoRA"]
+	path = repos/07-finetune/LoRA
+	url = https://github.com/microsoft/LoRA.git
+	shallow = true
+[submodule "repos/10-model-merge/mergekit"]
+	path = repos/10-model-merge/mergekit
+	url = https://github.com/arcee-ai/mergekit.git
+	shallow = true
+[submodule "repos/12-speculative-decoding/Medusa"]
+	path = repos/12-speculative-decoding/Medusa
+	url = https://github.com/FasterDecoding/Medusa.git
+	shallow = true
+[submodule "repos/09-model-pruning/LLM-Pruner"]
+	path = repos/09-model-pruning/LLM-Pruner
+	url = https://github.com/horseee/LLM-Pruner.git
+	shallow = true
+[submodule "repos/11-quantization/llm-awq"]
+	path = repos/11-quantization/llm-awq
+	url = https://github.com/mit-han-lab/llm-awq.git
+	shallow = true
+[submodule "repos/01-attention/DeepSeek-V3"]
+	path = repos/01-attention/DeepSeek-V3
+	url = https://github.com/deepseek-ai/DeepSeek-V3.git
+	shallow = true
+[submodule "repos/01-attention/FlashMLA"]
+	path = repos/01-attention/FlashMLA
+	url = https://github.com/deepseek-ai/FlashMLA.git
+	shallow = true
+[submodule "repos/02-attention-kernels/flashinfer"]
+	path = repos/02-attention-kernels/flashinfer
+	url = https://github.com/flashinfer-ai/flashinfer.git
+	shallow = true
+[submodule "repos/03-inference/nano-vllm"]
+	path = repos/03-inference/nano-vllm
+	url = https://github.com/GeeeekExplorer/nano-vllm.git
+	shallow = true
+[submodule "repos/04-kv-compression-token-pruning/LLMLingua"]
+	path = repos/04-kv-compression-token-pruning/LLMLingua
+	url = https://github.com/microsoft/LLMLingua.git
+	shallow = true
+[submodule "repos/05-linear-attention/mamba"]
+	path = repos/05-linear-attention/mamba
+	url = https://github.com/state-spaces/mamba.git
+	shallow = true
+[submodule "repos/05-linear-attention/RWKV-LM"]
+	path = repos/05-linear-attention/RWKV-LM
+	url = https://github.com/BlinkDL/RWKV-LM.git
+	shallow = true
+[submodule "repos/06-moe/megablocks"]
+	path = repos/06-moe/megablocks
+	url = https://github.com/databricks/megablocks.git
+	shallow = true
+[submodule "repos/09-model-pruning/wanda"]
+	path = repos/09-model-pruning/wanda
+	url = https://github.com/locuslab/wanda.git
+	shallow = true
+[submodule "repos/09-model-pruning/Torch-Pruning"]
+	path = repos/09-model-pruning/Torch-Pruning
+	url = https://github.com/VainF/Torch-Pruning.git
+	shallow = true
+[submodule "repos/12-speculative-decoding/EAGLE"]
+	path = repos/12-speculative-decoding/EAGLE
+	url = https://github.com/SafeAILab/EAGLE.git
+	shallow = true
+[submodule "repos/13-distributed/torchtitan"]
+	path = repos/13-distributed/torchtitan
+	url = https://github.com/pytorch/torchtitan.git
+	shallow = true
+[submodule "repos/00-basics/minbpe"]
+	path = repos/00-basics/minbpe
+	url = https://github.com/karpathy/minbpe.git
+	shallow = true
+[submodule "repos/04-kv-compression-token-pruning/ToMe"]
+	path = repos/04-kv-compression-token-pruning/ToMe
+	url = https://github.com/facebookresearch/ToMe.git
+	shallow = true
+[submodule "repos/11-quantization/gptq"]
+	path = repos/11-quantization/gptq
+	url = https://github.com/IST-DASLab/gptq.git
+	shallow = true
+[submodule "repos/00-basics/nanoGPT"]
+	shallow = true
+[submodule "repos/00-basics/nanochat"]
+	shallow = true
+[submodule "repos/00-basics/safetensors"]
+	shallow = true
+[submodule "repos/00-basics/tokenizers"]
+	shallow = true
+[submodule "repos/00-basics/transformers"]
+	shallow = true
+[submodule "repos/02-attention-kernels/liger-kernel"]
+	shallow = true
+[submodule "repos/02-attention-kernels/quack"]
+	shallow = true
+[submodule "repos/02-attention-kernels/triton"]
+	shallow = true
+[submodule "repos/02-attention-kernels/xformers"]
+	shallow = true
+[submodule "repos/03-inference/sglang"]
+	shallow = true
+[submodule "repos/03-inference/vllm"]
+	shallow = true
+[submodule "repos/07-finetune/accelerate"]
+	shallow = true
+[submodule "repos/07-finetune/peft"]
+	shallow = true
+[submodule "repos/08-rl-alignment/trl"]
+	shallow = true
+[submodule "repos/13-distributed/deepspeed"]
+	shallow = true
+[submodule "repos/13-distributed/megatron-lm"]
 	shallow = true
